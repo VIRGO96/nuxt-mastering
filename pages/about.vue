@@ -6,7 +6,7 @@
 
 <script setup>
 definePageMeta({
-    layout:false
+    layout:false,
 })
 
 function enableLayout(params) {
