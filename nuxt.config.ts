@@ -31,5 +31,9 @@ export default defineNuxtConfig({
       'composables/**',
 
     ]
-  }
+  },
+
+  plugins:[
+    '~/plugins/foo/my-plugin'
+  ]
 })
