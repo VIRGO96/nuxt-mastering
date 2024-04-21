@@ -1,10 +1,13 @@
 <template>
 <Banner/>
 
-<h2>Recent Notes:</h2>
+<h2>Recent Notes: {{ foo }}</h2>
  <NoteCard/>
 </template>
 
+<script setup>
+const foo=useFoo()
+</script>
 
 <style>
 </style>
