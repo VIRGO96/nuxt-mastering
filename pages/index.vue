@@ -22,7 +22,7 @@
     <br />
     <br />
     <br />
-    <ChildSlotComponent>
+    <!-- <ChildSlotComponent>
         <template v-slot:header="{ value }">
             <ChildComponent :message="value" />
         </template>
@@ -32,7 +32,9 @@
         <template v-slot:footer="{ message }">
             <h1>{{ message }}</h1>
         </template>
-    </ChildSlotComponent>
+    </ChildSlotComponent> -->
+
+    <TeleportComponent />
 </template>
 
 <script setup>
