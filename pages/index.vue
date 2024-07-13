@@ -35,10 +35,19 @@
     </ChildSlotComponent> -->
 
     <TeleportComponent />
+
+    <button @click="show = !show">Toggle</button>
+    <transition>
+        <p v-if="show">Hello, Nuxt</p>
+    </transition>
+    <transition name="fade">
+        <p v-if="show">Hello, Named Transition</p>
+    </transition>
 </template>
 
 <script setup>
 const dynamicValue = ref('Hello from parent!');
+const show = ref(true);
 
 const foo = useFoo();
 const { $hello, $consoleIt } = useNuxtApp();
@@ -49,4 +58,24 @@ const handleUpdate = (value) => {
 };
 </script>
 
-<style></style>
+<style>
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+</style>
