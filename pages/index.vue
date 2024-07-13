@@ -1,6 +1,15 @@
 <template>
 <Banner/>
 
+<!--  -->
+<options-api/>
+
+<br>
+
+<composition-api/>
+
+<!--  -->
+
 <h2>Recent Notes: {{ foo }}</h2>
 {{ $hello('Nuxt!') }}
 {{ $consoleIt(foo) }}
