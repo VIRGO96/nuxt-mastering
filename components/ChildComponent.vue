@@ -1,19 +1,18 @@
 <template>
     <!-- <p>This is Child Component</p> -->
-    <h1>{{ message }}</h1>
+    <h1>{{ props.message }}</h1>
 
     <!-- <button @click="sendUpdate">Click Me</button> -->
 </template>
 
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['update']);
 
-const props = defineProps({
-    message: {
-        type: String,
-        default: 'This is a default value!',
-    },
-});
+interface Props {
+    message: string;
+}
+
+const props = defineProps<Props>();
 
 const sendUpdate = () => {
     emit('update', 'Value from child');
