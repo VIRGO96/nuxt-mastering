@@ -60,3 +60,34 @@ let employee: EmployeePerson = {
     isActive: true,
     id: 123,
 };
+
+// Generics
+function identity<T>(value: T): T {
+    return value;
+}
+
+let stringValue = identity<string>('Hello');
+let numberValue = identity<number>(111);
+
+const input = document.querySelector<HTMLInputElement>('.input');
+
+input?.value;
+
+type ApiResponse<Data> = {
+    data: Data;
+    status: number;
+};
+
+const userResponse: ApiResponse<Person> = {
+    data: {
+        name: 'Zack',
+        age: 25,
+        isActive: true,
+    },
+    status: 200,
+};
+
+const versionResponse: ApiResponse<string> = {
+    data: '0.1',
+    status: 200,
+};
