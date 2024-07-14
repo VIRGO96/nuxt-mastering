@@ -46,6 +46,8 @@
 </template>
 
 <script setup>
+const counterStore = useCounterStore();
+
 const dynamicValue = ref('Hello from parent!');
 const show = ref(true);
 
