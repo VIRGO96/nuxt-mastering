@@ -43,6 +43,12 @@
     <transition name="fade">
         <p v-if="show">Hello, Named Transition</p>
     </transition>
+
+    <div class="box">
+        <h4>Count = {{ counterStore.count }}</h4>
+        <h3>Double Count = {{ counterStore.doubleCount }}</h3>
+        <button @click="counterStore.increment()">Increment</button>
+    </div>
 </template>
 
 <script setup>
@@ -79,5 +85,11 @@ const handleUpdate = (value) => {
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
+}
+
+.box {
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 20px;
 }
 </style>

@@ -1,6 +1,7 @@
 export const useCounterStore = defineStore('counter', {
     state: () => ({
         count: 0,
+        isActive: true,
     }),
 
     getters: {
@@ -11,5 +12,9 @@ export const useCounterStore = defineStore('counter', {
         increment() {
             this.count++;
         },
+    },
+
+    persist: {
+        storage: persistedState.localStorage,
     },
 });
