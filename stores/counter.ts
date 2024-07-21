@@ -1,3 +1,5 @@
+import SecureLS from 'secure-ls';
+
 export const useCounterStore = defineStore('counter', {
     state: () => ({
         count: 0,
@@ -15,6 +17,19 @@ export const useCounterStore = defineStore('counter', {
     },
 
     persist: {
-        storage: persistedState.localStorage,
+        storage: {
+            getItem: (key) => {
+                return new SecureLS({
+                    encodingType: 'des',
+                    encryptionSecret: '@#987asdui@',
+                }).get(key);
+            },
+            setItem: (key, value) => {
+                return new SecureLS({
+                    encodingType: 'des',
+                    encryptionSecret: '@#987asdui@',
+                }).set(key, value);
+            },
+        },
     },
 });
