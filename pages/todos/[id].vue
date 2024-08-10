@@ -24,6 +24,12 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+    pageTransition: {
+        name: 'rotate',
+    },
+});
+
 useSeoMeta({
     title: 'Nuxt - Todo Details',
     description: 'Nuxt Todo App - Details Page',
