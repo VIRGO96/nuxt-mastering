@@ -1,5 +1,3 @@
-import SecureLS from 'secure-ls';
-
 export const useTodoStore = defineStore('todo', {
     state: () => ({
         todos: [] as Array<{
@@ -11,64 +9,109 @@ export const useTodoStore = defineStore('todo', {
         }>,
     }),
 
-    getters: {
-        getTodoById: (state) => (id: number) =>
-            state.todos.find((todo) => todo.id === id),
-    },
-
     actions: {
-        addTodo(todo: {
-            id: number;
-            title: string;
-            description: string;
-            isCompleted: boolean;
-            createdAt: string;
-        }) {
-            this.todos.push(todo);
-        },
-        updateTodo(updateTodo: {
-            id: number;
-            title: string;
-            description: string;
-            isCompleted: boolean;
-            createdAt: string;
-        }) {
-            const index = this.todos.findIndex(
-                (todo) => todo.id === updateTodo.id
-            );
+        async fetchTodos() {
+            try {
+                const { data, error } = await useFetch('/api/todos');
 
-            if (index !== -1) {
-                this.todos[index] = updateTodo;
+                if (error.value) {
+                    throw new Error('Failed to fetch todos');
+                }
+                if (data.value) {
+                    this.todos = data?.value.data;
+                }
+            } catch (error) {
+                console.error('Failed to fetch todos', error);
             }
         },
 
-        deleteTodo(id: number) {
-            this.todos = this.todos.filter((todo) => todo.id !== id);
+        async addTodo(todo: {
+            id: number;
+            title: string;
+            description: string;
+            isCompleted: boolean;
+            createdAt: string;
+        }) {
+            try {
+                const { data, error } = await useFetch('/api/todos', {
+                    method: 'POST',
+                    body: todo,
+                });
+
+                if (error.value) {
+                    throw new Error('Failed to add todos');
+                }
+                if (data.value) {
+                    this.todos.push(data?.value.data);
+                }
+            } catch (error) {
+                console.error('Failed to add todos', error);
+            }
         },
 
-        updateMarkCompletedStatus(id: number) {
+        async updateTodo(updateTodo: {
+            id: number;
+            title: string;
+            description: string;
+            isCompleted: boolean;
+            createdAt: string;
+        }) {
+            try {
+                const { data, error } = await useFetch('/api/todos', {
+                    method: 'PUT',
+                    body: updateTodo,
+                });
+
+                if (error.value) {
+                    throw new Error('Failed to update todos');
+                }
+            } catch (error) {
+                console.error('Failed to update todos', error);
+            }
+        },
+
+        async deleteTodo(id: number) {
+            try {
+                const { data, error } = await useFetch('/api/todos', {
+                    method: 'DELETE',
+                    body: { id },
+                });
+
+                if (error.value) {
+                    throw new Error('Failed to delete todo');
+                }
+            } catch (error) {
+                console.error('Failed to delete todo', error);
+            }
+        },
+
+        async updateMarkCompletedStatus(id: number) {
             const index = this.todos.findIndex((todo) => todo.id === id);
+
+            if (index === -1) {
+                return 'Error';
+            }
+            const updateTodo = {
+                ...this.todos[index],
+                isCompleted: !this.todos[index].isCompleted,
+            };
+
+            try {
+                const { data, error } = await useFetch('/api/todos', {
+                    method: 'PUT',
+                    body: updateTodo,
+                });
+
+                if (error.value) {
+                    throw new Error('Failed to update todos');
+                }
+            } catch (error) {
+                console.error('Failed to update todos', error);
+            }
 
             if (index !== -1) {
                 this.todos[index].isCompleted = !this.todos[index].isCompleted;
             }
-        },
-    },
-
-    persist: {
-        storage: {
-            getItem: (key) => {
-                return new SecureLS({
-                    encodingType: 'des',
-                    encryptionSecret: '@#987asdui@',
-                }).get(key);
-            },
-            setItem: (key, value) => {
-                return new SecureLS({
-                    encodingType: 'des',
-                    encryptionSecret: '@#987asdui@',
-                }).set(key, value);
-            },
         },
     },
 });

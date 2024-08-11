@@ -22,6 +22,10 @@ useHead({
         },
     ],
 });
+
+onMounted(async () => {
+    await todoStore.fetchTodos();
+});
 </script>
 
 <style lang="sass" scoped></style>
